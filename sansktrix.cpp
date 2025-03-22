@@ -7,6 +7,7 @@
 #include <atomic>
 #include <mutex>
 #include <iostream>
+#include <signal.h>
 
 // Devanagari letters representing the Sanskrit alphabet
 std::vector<const char*> sanskrit_alphabet = {
@@ -100,14 +101,25 @@ void press_any_key_thread()
     }
 }
 
+void handle_exit(int sig) {
+    endwin(); // Restore terminal before quitting
+    _exit(0); // Exit immediately
+    sig++; // Avoid unused parameter warning
+}
+
 int main() {
+    // Handle exit signals
+    signal(SIGINT, handle_exit); // Handle Ctrl+C
+    signal(SIGTERM, handle_exit); // Handle termination signals
+
     // Set locale to support UTF-8
     setlocale(LC_ALL, "");
 
     // Initialize ncurses
-    initscr();
-    noecho();
-    curs_set(0);  // Hide cursor
+    initscr(); // Start ncurses mode
+    cbreak(); // Disable line buffering
+    noecho(); // Don't echo user input
+    curs_set(0); // Hide the cursor
 
     // Get screen size
     getmaxyx(stdscr, max_row, max_col);
