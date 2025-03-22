@@ -11,6 +11,20 @@ Install nscurses devel files (e.g. `sudo apt-get install libncurses-dev` on Debi
 ./compile
 ```
 
+You test the screen saver by simply running
+
+```bash
+./sansktrix
+```
+
+in your terminal. By default the multithreaded version of the screen version is run, which produces smoother rain effect with variable speed columns. By running
+
+```bash
+./sansktrix --single_threaded_print
+```
+
+a less resource hungry, single threaded printing version will draw your rain. You may want to have a look into the source code and play with parameters to test their effects!
+
 # Set-up
 
 Edit the header section of the `sansktrix_daemon.sh` within the repository
@@ -21,6 +35,9 @@ SANSKTRIX_PATH="$HOME/sansktrix/sansktrix"
 
 # Default inactivity timeout in seconds
 INACTIVITY_TIMEOUT=60 
+
+# Single threaded printing (set equal to --single_threaded_print to enable)
+SINGLE_THREADED_PRINT=
 ```
 
 and add this line to your .bashrc file

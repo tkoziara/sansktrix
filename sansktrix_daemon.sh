@@ -10,6 +10,9 @@ SANSKTRIX_PATH="$HOME/sansktrix/sansktrix"
 # Default inactivity timeout in seconds
 INACTIVITY_TIMEOUT=60 
 
+# Single threaded printing (set equal to --single_threaded_print to enable)
+SINGLE_THREADED_PRINT=
+
 # Log file
 LOG_FILE="/tmp/sansktrix_daemon.log"
 
@@ -60,7 +63,7 @@ while true; do
         echo "[$(date +'%Y-%m-%d %H:%M:%S')] Terminal is $status (Idle: ${idle_seconds}s)" >> "$LOG_FILE"
 
         # Run screen saver
-        setsid "$SANSKTRIX_PATH" </dev/$TERMINAL >/dev/$TERMINAL 2>&1
+        setsid "$SANSKTRIX_PATH" $SINGLE_THREADED_PRINT </dev/$TERMINAL >/dev/$TERMINAL 2>&1
 
         # Restore broken command prompt (TODO: understand why terminal prompt is not properly restored when sansktrix exits,  )
         #                               (      and/or possibly find a more elegant way of restoring prompt using $PS1 variable)
